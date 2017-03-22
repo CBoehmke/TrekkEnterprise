@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace TrekkEnterpriseV4.Models
 {
     public class ExternalLoginConfirmationViewModel
@@ -64,6 +65,9 @@ namespace TrekkEnterpriseV4.Models
 
     public class RegisterViewModel
     {
+
+        public string Name { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

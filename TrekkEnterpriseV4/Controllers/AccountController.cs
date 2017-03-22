@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TrekkEnterpriseV4.Models;
+using System.Collections.Generic;
 
 namespace TrekkEnterpriseV4.Controllers
 {
@@ -17,9 +18,11 @@ namespace TrekkEnterpriseV4.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext context;
 
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -136,16 +139,18 @@ namespace TrekkEnterpriseV4.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, SuperUser")]
         public ActionResult Register()
         {
+            ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
             return View();
         }
+
 
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, SuperUser")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -155,13 +160,13 @@ namespace TrekkEnterpriseV4.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    //Assign Role to user Here 
+                    await this.UserManager.AddToRoleAsync(user.Id, model.Name);
+                    //Ends Here
+
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -171,6 +176,51 @@ namespace TrekkEnterpriseV4.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        //// New Methods for Roles
+        //[AllowAnonymous]
+        //[HttpGet]
+        //public ActionResult RegisterRole()
+        //{
+        //    // load roles into SelectList
+        //    var roles = new List<SelectListItem>();
+        //    foreach (var role in context.Roles)
+        //    {
+        //        roles.Add(new SelectListItem { Text = role.Name, Value = role.Name });
+        //    }
+
+        //    var result = new SelectList(roles);
+        //    ViewBag.Name = result;
+
+        //    // load users into SelectList
+        //    var users = new List<SelectListItem>();
+        //    foreach (var user in context.Users)
+        //    {
+        //        users.Add(new SelectListItem { Text = user.UserName, Value = user.UserName });
+        //    }
+        //    var result2 = new SelectList(users);
+        //    ViewBag.UserName = result2;
+
+        //    return View();
+        //}
+        ////
+        //// POST: /Account/Register
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> RegisterRole(RegisterViewModel model, ApplicationUser user)
+        //{
+        //    var userId = context.Users.Where(i => i.UserName == user.UserName).Select(s => s.Id);
+        //    string updateId = "";
+        //    foreach (var i in userId)
+        //    {
+        //        updateId = i.ToString();
+        //    }
+        //    // Assign role to user here
+        //    await this.UserManager.AddToRoleAsync(updateId, model.Name);
+
+        //    return RedirectToAction("Index", "Home");
+        //}
 
         //
         // GET: /Account/ConfirmEmail
