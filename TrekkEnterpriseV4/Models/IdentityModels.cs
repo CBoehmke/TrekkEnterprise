@@ -11,7 +11,7 @@ namespace TrekkEnterpriseV4.Models
     public class ApplicationUser : IdentityUser
     {
         public string AccessCode { get; set; }
-        public bool? Enabled { get; set; }
+        public bool Enabled { get; set; }
         public DateTime DateLastDownloaded { get; set; }
         public int DownloadCount { get; set; }
 

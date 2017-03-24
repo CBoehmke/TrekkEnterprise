@@ -180,19 +180,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703211730141_Initial.cs" />
-    <Compile Include="Migrations\201703211730141_Initial.Designer.cs">
-      <DependentUpon>201703211730141_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\ApplicationDbContext\201703241617178_InitialDatabaseCreation.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201703241617178_InitialDatabaseCreation.Designer.cs">
+      <DependentUpon>201703241617178_InitialDatabaseCreation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703211736531_Enterprise.cs" />
-    <Compile Include="Migrations\201703211736531_Enterprise.Designer.cs">
-      <DependentUpon>201703211736531_Enterprise.cs</DependentUpon>
+    <Compile Include="Migrations\ApplicationDbContext\Configuration.cs" />
+    <Compile Include="Migrations\EnterpriseContext\201703241617509_InitialDatabaseCreation.cs" />
+    <Compile Include="Migrations\EnterpriseContext\201703241617509_InitialDatabaseCreation.Designer.cs">
+      <DependentUpon>201703241617509_InitialDatabaseCreation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703221908404_New.cs" />
-    <Compile Include="Migrations\201703221908404_New.Designer.cs">
-      <DependentUpon>201703221908404_New.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\EnterpriseContext\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Enterprise.cs" />
@@ -293,14 +290,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703211730141_Initial.resx">
-      <DependentUpon>201703211730141_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\ApplicationDbContext\201703241617178_InitialDatabaseCreation.resx">
+      <DependentUpon>201703241617178_InitialDatabaseCreation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703211736531_Enterprise.resx">
-      <DependentUpon>201703211736531_Enterprise.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703221908404_New.resx">
-      <DependentUpon>201703221908404_New.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\EnterpriseContext\201703241617509_InitialDatabaseCreation.resx">
+      <DependentUpon>201703241617509_InitialDatabaseCreation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,12 +14,15 @@ namespace TrekkEnterpriseV4.Models
         [DisplayName("Client ID")]
         public int ClientID { get; set; }
 
+        [DisplayName("Parent ID")]
+        public int ParentID { get; set; }
+
         [Required]
         [StringLength(30)]
         [DisplayName("Access Code")]
         public string AccessCode { get; set; }
 
-        [DisplayName("Android?")]
+        [DisplayName("OS")]
         public bool IsAndroid { get; set; }
 
         [DisplayName("APK Name")]

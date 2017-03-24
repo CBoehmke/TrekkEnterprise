@@ -1,9 +1,9 @@
-namespace TrekkEnterpriseV4.Migrations
+namespace TrekkEnterpriseV4.Migrations.ApplicationDbContext
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class InitialDatabaseCreation : DbMigration
     {
         public override void Up()
         {
@@ -35,6 +35,10 @@ namespace TrekkEnterpriseV4.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        AccessCode = c.String(),
+                        Enabled = c.Boolean(nullable: false),
+                        DateLastDownloaded = c.DateTime(nullable: false),
+                        DownloadCount = c.Int(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

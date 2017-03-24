@@ -14,9 +14,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Client.Name)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.AccessCode)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.IsAndroid)
         </th>
@@ -30,11 +30,11 @@
             @Html.DisplayNameFor(model => model.Enabled)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateModified)
+            Last Modified
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.DownloadCount)
         </th>
@@ -46,9 +46,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Client.Name)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.AccessCode)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.IsAndroid)
         </td>
@@ -59,14 +59,22 @@
             @Html.DisplayFor(modelItem => item.Route)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Enabled)
+            @if (item.Enabled)
+            {
+                <span style="color:green">Y</span>
+            }
+
+            else
+            {
+                <span style="color:red">N</span>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateModified)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.DownloadCount)
         </td>

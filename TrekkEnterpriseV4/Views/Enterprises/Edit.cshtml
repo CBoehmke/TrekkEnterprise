@@ -28,7 +28,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AccessCode, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AccessCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.AccessCode, new { htmlAttributes = new { @class = "form-control accessCode", @readonly = "readonly" } })
+                <div style="padding-left:150px;padding-right:0px;padding-top:3px">
+                    <input type="button" ; direction:ltr" value="New Entry Code" class="btn btn-default generate" />
+                </div>
                 @Html.ValidationMessageFor(model => model.AccessCode, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -107,4 +110,23 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+    <script>
+        $(".generate").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                contentType: 'application/json',
+                url: "/Downloads/RemoteEntryCode",
+                success: function (result) {
+                    $(".accessCode").val(result.code);
+                },
+                error: function (result) {
+                    alert('error');
+                }
+            });
+        });
+    </script>
+    }
+
+
+

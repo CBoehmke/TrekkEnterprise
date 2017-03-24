@@ -19,7 +19,7 @@ namespace TrekkEnterpriseV4.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var enterprises = db.Enterprises.Include(e => e.Client);
+            var enterprises = db.Enterprises.Include(e => e.Client).Include(e => e.Parent);
             return View(enterprises.ToList());
         }
 
@@ -43,12 +43,8 @@ namespace TrekkEnterpriseV4.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            Enterprise enterprise = new Enterprise();
-            Helpers helper = new Controllers.Helpers();
-            enterprise.AccessCode = helper.GenerateEntryCode();
-            enterprise.Enabled = true;
-
             ViewBag.ClientID = new SelectList(db.Clients, "ID", "Name");
+            ViewBag.ParentID = new SelectList(db.Parents, "ID", "Name");
             return View();
         }
 
@@ -56,24 +52,23 @@ namespace TrekkEnterpriseV4.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ClientID,AccessCode,IsAndroid,ApkName,Route,Enabled,DateModified,DateCreated,DownloadCount")] Enterprise enterprise)
+        public ActionResult Create([Bind(Include = "ID,ClientID,ParentID,AccessCode,IsAndroid,ApkName,Route,Enabled,DateModified,DateCreated,DownloadCount")] Enterprise enterprise)
         {
             if (ModelState.IsValid)
             {
-                enterprise.DateCreated = DateTime.Now;
-                enterprise.DateModified = DateTime.Now;
                 db.Enterprises.Add(enterprise);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.ClientID = new SelectList(db.Clients, "ID", "Name", enterprise.ClientID);
+            ViewBag.ParentID = new SelectList(db.Parents, "ID", "Name", enterprise.ParentID);
             return View(enterprise);
         }
 
         // GET: Enterprises/Edit/5
-        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -86,6 +81,7 @@ namespace TrekkEnterpriseV4.Controllers
                 return HttpNotFound();
             }
             ViewBag.ClientID = new SelectList(db.Clients, "ID", "Name", enterprise.ClientID);
+            ViewBag.ParentID = new SelectList(db.Parents, "ID", "Name", enterprise.ParentID);
             return View(enterprise);
         }
 
@@ -94,7 +90,7 @@ namespace TrekkEnterpriseV4.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ClientID,AccessCode,IsAndroid,ApkName,Route,Enabled,DateModified,DateCreated,DownloadCount")] Enterprise enterprise)
+        public ActionResult Edit([Bind(Include = "ID,ClientID,ParentID,AccessCode,IsAndroid,ApkName,Route,Enabled,DateModified,DateCreated,DownloadCount")] Enterprise enterprise)
         {
             if (ModelState.IsValid)
             {
@@ -103,11 +99,11 @@ namespace TrekkEnterpriseV4.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ClientID = new SelectList(db.Clients, "ID", "Name", enterprise.ClientID);
+            ViewBag.ParentID = new SelectList(db.Parents, "ID", "Name", enterprise.ParentID);
             return View(enterprise);
         }
 
         // GET: Enterprises/Delete/5
-        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

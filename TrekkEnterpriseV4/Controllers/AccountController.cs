@@ -157,10 +157,10 @@ namespace TrekkEnterpriseV4.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                user.DateLastDownloaded = DateTime.Now;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
                     //Assign Role to user Here 
                     await this.UserManager.AddToRoleAsync(user.Id, model.Name);
                     //Ends Here
@@ -176,51 +176,6 @@ namespace TrekkEnterpriseV4.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //// New Methods for Roles
-        //[AllowAnonymous]
-        //[HttpGet]
-        //public ActionResult RegisterRole()
-        //{
-        //    // load roles into SelectList
-        //    var roles = new List<SelectListItem>();
-        //    foreach (var role in context.Roles)
-        //    {
-        //        roles.Add(new SelectListItem { Text = role.Name, Value = role.Name });
-        //    }
-
-        //    var result = new SelectList(roles);
-        //    ViewBag.Name = result;
-
-        //    // load users into SelectList
-        //    var users = new List<SelectListItem>();
-        //    foreach (var user in context.Users)
-        //    {
-        //        users.Add(new SelectListItem { Text = user.UserName, Value = user.UserName });
-        //    }
-        //    var result2 = new SelectList(users);
-        //    ViewBag.UserName = result2;
-
-        //    return View();
-        //}
-        ////
-        //// POST: /Account/Register
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> RegisterRole(RegisterViewModel model, ApplicationUser user)
-        //{
-        //    var userId = context.Users.Where(i => i.UserName == user.UserName).Select(s => s.Id);
-        //    string updateId = "";
-        //    foreach (var i in userId)
-        //    {
-        //        updateId = i.ToString();
-        //    }
-        //    // Assign role to user here
-        //    await this.UserManager.AddToRoleAsync(updateId, model.Name);
-
-        //    return RedirectToAction("Index", "Home");
-        //}
 
         //
         // GET: /Account/ConfirmEmail
