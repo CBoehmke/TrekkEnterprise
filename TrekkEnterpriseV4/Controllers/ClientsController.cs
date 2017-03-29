@@ -54,6 +54,8 @@ namespace TrekkEnterpriseV4.Controllers
         {
             if (ModelState.IsValid)
             {
+                client.DateCreated = DateTime.Now;
+                client.DateModified = DateTime.Now;
                 db.Clients.Add(client);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -87,6 +89,10 @@ namespace TrekkEnterpriseV4.Controllers
         {
             if (ModelState.IsValid)
             {
+                client.DateModified = DateTime.Now;
+                client.DateCreated = DateTime.Now;
+                
+                
                 db.Entry(client).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

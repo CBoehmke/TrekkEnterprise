@@ -31,13 +31,13 @@ namespace TrekkEnterpriseV4
             routes.MapRoute(
               name: "RecordDownload",
               url: "download/recorddownload/{id}",
-              defaults: new { controller = "Download", action = "RecordDownload" }
+              defaults: new { controller = "Downloads", action = "RecordDownload" }
            );
             // download
             routes.MapRoute(
              name: "Download",
              url: "download/{id}",
-             defaults: new { controller = "Download", action = "Download" }
+             defaults: new { controller = "Downloads", action = "Download" }
          );
 
 

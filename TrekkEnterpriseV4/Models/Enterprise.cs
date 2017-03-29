@@ -22,12 +22,13 @@ namespace TrekkEnterpriseV4.Models
         [DisplayName("Access Code")]
         public string AccessCode { get; set; }
 
-        [DisplayName("OS")]
+        [DisplayName("Android?")]
         public bool IsAndroid { get; set; }
 
         [DisplayName("APK Name")]
         public string ApkName { get; set; }
 
+        [Required]
         public string Route { get; set; }
 
         public bool Enabled { get; set; }
@@ -42,7 +43,7 @@ namespace TrekkEnterpriseV4.Models
         [DisplayName("Date Created")]
         public DateTime DateCreated { get; set; }
 
-        [DisplayName("Number of Downloads")]
+        [DisplayName("Download Count")]
         public int DownloadCount { get; set; }
 
         // Navigation

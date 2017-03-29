@@ -12,7 +12,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Client.Name)
+            @Html.DisplayNameFor(model => model.ID)
+        </th>
+        <th>
+            Client
+        </th>
+        <th>
+            Parent
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Route)
         </th>
         @*<th>
             @Html.DisplayNameFor(model => model.AccessCode)
@@ -20,14 +29,15 @@
         <th>
             @Html.DisplayNameFor(model => model.IsAndroid)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.ApkName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Route)
-        </th>
+        </th>*@
+       
         <th>
             @Html.DisplayNameFor(model => model.Enabled)
+        </th>
+        <th>
+            Download Link
         </th>
         <th>
             Last Modified
@@ -35,29 +45,44 @@
         @*<th>
             @Html.DisplayNameFor(model => model.DateCreated)
         </th>*@
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.DownloadCount)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Client.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Parent.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Route)
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.AccessCode)
         </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.IsAndroid)
+            @if (item.IsAndroid)
+            {
+                <span style="color:green">Y</span>
+            }
+
+            else
+            {
+                <span style="color:red">N</span>
+            }
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.ApkName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Route)
-        </td>
+        </td>*@
+       
         <td>
             @if (item.Enabled)
             {
@@ -70,14 +95,28 @@
             }
         </td>
         <td>
+            @if (item.Enabled)
+            {
+                if (item.IsAndroid)
+                {
+                    <a href="mailto:?Subject=TREKK%20Download%20Link&body=Click%20the%20link%20to%20download:%0A%0A%20https://trekkenterprise.com/appdownloads/@(item.Route)/@(item.ApkName)">Send Link</a>
+                }
+
+                else
+                {
+                    <a href="mailto:?Subject=TREKK%20Download%20Link&body=Click%20the%20link%20to%20download:%0A%0A%20https://trekkenterprise.com/appdownloads/@(item.Route)/manifest.plist">Send Link</a>
+                }
+            }
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.DateModified)
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.DateCreated)
         </td>*@
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.DownloadCount)
-        </td>
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |

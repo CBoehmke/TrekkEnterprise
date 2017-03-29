@@ -1,0 +1,41 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Download";
+}
+
+<div class="jumbotron">
+    <h1>Download</h1>
+    <p class="lead">Click the link below to initiate the app download from your mobile device.</p>
+
+    @if (ViewBag.IsAndroid)
+    {
+        <p><a href="@Html.Raw("https://trekkenterprise.com/appdownloads/" + ViewBag.Route + "/" + ViewBag.ApkName)" class="btn btn-primary btn-lg">Start Download &raquo;</a></p>
+    }
+    else
+    {
+        <p><a href="@Html.Raw("itms-services://?action=download-manifest&amp;url=https://trekkenterprise.com/appdownloads/" + ViewBag.AccessRoute + "/manifest.plist")" class="btn btn-primary btn-lg">Start Download &raquo;</a></p>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        var downloadID = '@ViewBag.AccessCode';
+        $('.btn').on('click', function (e) {
+            e.preventDefault();
+            var self = this;
+            $.ajax({
+                url: '/download/recorddownload/' + downloadID,
+                dataType: 'json',
+                contentType: 'application/json',
+                type: "POST",
+                cache: false,
+                success: function () {
+                    console.log(self.href);
+                    window.location = self.href;
+                }
+            })
+        });
+    });
+</script>
+

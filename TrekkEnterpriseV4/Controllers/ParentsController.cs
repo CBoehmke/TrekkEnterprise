@@ -54,6 +54,8 @@ namespace TrekkEnterpriseV4.Controllers
         {
             if (ModelState.IsValid)
             {
+                parent.DateCreated = DateTime.Now;
+                parent.DateModified = DateTime.Now;
                 db.Parents.Add(parent);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -43,9 +43,16 @@ namespace TrekkEnterpriseV4.Controllers
         [Authorize]
         public ActionResult Create()
         {
+            // get entry code
+            Enterprise enterprise = new Enterprise();
+            Helpers helper = new Helpers();
+            enterprise.AccessCode = helper.GenerateEntryCode();    
+
+                                                       
+            enterprise.Enabled = true;
             ViewBag.ClientID = new SelectList(db.Clients, "ID", "Name");
             ViewBag.ParentID = new SelectList(db.Parents, "ID", "Name");
-            return View();
+            return View(enterprise);
         }
 
         // POST: Enterprises/Create
@@ -58,6 +65,11 @@ namespace TrekkEnterpriseV4.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                // avoiding null value DateTime exception
+                enterprise.DateCreated = DateTime.Now;
+                enterprise.DateModified = DateTime.Now;
+
                 db.Enterprises.Add(enterprise);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -95,6 +107,9 @@ namespace TrekkEnterpriseV4.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(enterprise).State = EntityState.Modified;
+                enterprise.DateModified = DateTime.Now;
+                enterprise.DateCreated = DateTime.Now;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

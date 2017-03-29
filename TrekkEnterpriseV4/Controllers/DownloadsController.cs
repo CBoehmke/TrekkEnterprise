@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TrekkEnterpriseV4.DAL;
 using TrekkEnterpriseV4.Models;
 
 namespace TrekkEnterpriseV4.Controllers
@@ -10,6 +11,7 @@ namespace TrekkEnterpriseV4.Controllers
     public class DownloadsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private EnterpriseContext edb = new EnterpriseContext();
 
         // GET: Downloads
         public ActionResult Index()
@@ -20,9 +22,14 @@ namespace TrekkEnterpriseV4.Controllers
 
         public ActionResult Download(string id)
         {
-            var user = db.Users.Where(theID => theID.AccessCode == id).FirstOrDefault();
-            if (user == null || !user.Enabled) return RedirectToAction("Index", "Home");
-            ViewBag.EntryCode = id;
+            var enterprise = edb.Enterprises.Where(theID => theID.AccessCode == id).FirstOrDefault();
+            if (enterprise == null || !enterprise.Enabled) return RedirectToAction("Index", "Home");
+            ViewBag.AccessCode = id;
+            ViewBag.IsAndroid = enterprise.IsAndroid;
+            ViewBag.ApkName = enterprise.ApkName;
+
+            var android = edb.Enterprises.Where(isAndroid => isAndroid.IsAndroid).FirstOrDefault();
+          
             return View();
         }
 
@@ -31,9 +38,10 @@ namespace TrekkEnterpriseV4.Controllers
         public JsonResult RecordDownload(string id)
         {
             var user = db.Users.Where(theID => theID.AccessCode == id).FirstOrDefault();
+            //var enterprise = edb.Enterprises.Where(downloadCount =
             if (user != null)
             {
-                user.DownloadCount = user.DownloadCount + 1;
+                
                 user.DateLastDownloaded = DateTime.Now;
                 db.SaveChanges();
             }
