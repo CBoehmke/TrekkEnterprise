@@ -11,9 +11,9 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.ID)
-        </th>
+        </th>*@
         <th>
             Client
         </th>
@@ -53,9 +53,9 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.ID)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Client.Name)
         </td>
@@ -99,12 +99,12 @@
             {
                 if (item.IsAndroid)
                 {
-                    <a href="mailto:?Subject=TREKK%20Download%20Link&body=Click%20the%20link%20to%20download:%0A%0A%20https://trekkenterprise.com/appdownloads/@(item.Route)/@(item.ApkName)">Send Link</a>
+                    <a href="mailto:?Subject=TREKK%20-%20App%20Download%20Link&body=Click%20the%20link%20to%20download:%0A%0A%20https://trekkenterprise.com/appdownloads/@(item.Route)/@(item.ApkName)">Send Link</a>
                 }
 
                 else
                 {
-                    <a href="mailto:?Subject=TREKK%20Download%20Link&body=Click%20the%20link%20to%20download:%0A%0A%20https://trekkenterprise.com/appdownloads/@(item.Route)/manifest.plist">Send Link</a>
+                    <a href="mailto:?Subject=TREKK%20-%20App%20Download%20Link&body=Click%20the%20link%20to%20download:%0A%0A%20https://trekkenterprise.com/appdownloads/@(item.Route)/manifest.plist">Send Link</a>
                 }
             }
         </td>

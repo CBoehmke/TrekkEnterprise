@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace TrekkEnterpriseV4.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -139,7 +139,7 @@ namespace TrekkEnterpriseV4.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize(Roles = "Admin, SuperUser")]
+        //[Authorize(Roles = "Admin, SuperUser")]
         public ActionResult Register()
         {
             ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
@@ -150,7 +150,7 @@ namespace TrekkEnterpriseV4.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [Authorize(Roles = "Admin, SuperUser")]
+        //[Authorize(Roles = "Admin, SuperUser")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

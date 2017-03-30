@@ -9,6 +9,9 @@
 
 </head>
 <body>
+@if (User.IsInRole("Admin") || User.IsInRole("SuperUser") || User.IsInRole("User"))
+{
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -19,18 +22,20 @@
                 </button>
                 @Html.ActionLink("Trekk Enterprise", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
                     <li>@Html.ActionLink("Parents", "Index", "Parents")</li>
-                    <li>@Html.ActionLink("Roles", "Index", "Role")</li>
+                    @*<li>@Html.ActionLink("Roles", "Index", "Role")</li>*@
                     <li>@Html.ActionLink("Enterprise Table", "Index", "Enterprises")</li>
 
                 </ul>
                 @Html.Partial("_LoginPartial")
-            </div>
+            </div>            
         </div>
     </div>
+}
     <div class="container body-content">
         @RenderBody()
         <hr />

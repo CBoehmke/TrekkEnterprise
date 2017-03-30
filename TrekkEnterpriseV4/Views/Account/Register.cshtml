@@ -34,7 +34,7 @@
     <div class="form-group">
         @Html.Label("Select Your User Type", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownList("Name")
+           @Html.DropDownList("Name",(IEnumerable<SelectListItem>)ViewBag.Roles, new { @class = "form-control" })
         </div>
     </div>
     <!--Ends Here-->
@@ -48,4 +48,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
 }
